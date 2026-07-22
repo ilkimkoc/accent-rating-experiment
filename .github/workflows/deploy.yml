@@ -34,9 +34,6 @@ jobs:
           # Linguistic:
           LATEST_LINGUISTIC=$(ls packaged/linguistic_*.zip | sort -V | tail -n 1)
           unzip "$LATEST_LINGUISTIC" -d pages
-          # Visual:
-          LATEST_VISUAL=$(ls packaged/visual_*.zip | sort -V | tail -n 1)
-          unzip "$LATEST_VISUAL" -d pages
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
