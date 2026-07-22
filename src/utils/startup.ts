@@ -93,9 +93,14 @@ function setupDarkModeUI() {
 }
 
 function silenceConsoleInProduction() {
-  if (process.env.NODE_ENV === "production") {
+  const isProduction =
+    typeof process !== "undefined" &&
+    process.env &&
+    process.env.NODE_ENV === "production";
+
+  if (isProduction) {
     console.error = () => {};
     console.warn = () => {};
     console.log = () => {};
   }
-}
+} 
