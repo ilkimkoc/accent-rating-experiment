@@ -1,0 +1,322 @@
+/**
+ * @title Linguistic & Visual Experiment Styles
+ * @version 1.7.4
+ */
+
+@import "~jspsych/css/jspsych.css";
+@import "@jspsych/plugin-survey/css/survey.css";
+@import "~survey-core/survey-core.min.css";
+
+$primary-color: #474747;
+$dark-bg: #1a1a1a;
+$dark-surface: #242424;
+$error-red: #e74c3c;
+$text-light: #e0e0e0;
+$light-error-bg: #f8d7da;
+$light-error-text: #721c24;
+$dark-error-bg: #442727;
+$dark-error-text: #f8d7da;
+
+body {
+  background-color: #ffffff;
+  color: #000000;
+  transition: background-color 0.3s, color 0.3s;
+  margin: 0;
+  padding-top: 60px !important;
+  font-family: system-ui, -apple-system, sans-serif;
+  min-height: 100vh;
+}
+
+.jspsych-content {
+  max-width: 800px;
+  width: 90%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+#dark-mode-navbar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0 15px;
+  z-index: 9999;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(5px);
+  box-sizing: border-box;
+}
+
+.theme-toggle-btn {
+  background: transparent;
+  color: #333;
+  border: 1px solid #ccc;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  padding: 0;
+  transition: all 0.3s ease;
+  &:hover {
+    background: rgba(0, 0, 0, 0.05);
+    transform: rotate(15deg);
+  }
+}
+
+.sentence-container,
+.instruction-container,
+.welcome-container,
+.save-status-wrapper {
+  background: white;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 20px;
+
+  .study-sentence,
+  .test-prompt {
+    font-size: 24px;
+    line-height: 1.5;
+    color: #333;
+    text-align: center;
+  }
+
+  p {
+    font-size: 18px;
+    line-height: 1.6;
+    color: #444;
+    text-align: center;
+    margin-bottom: 15px;
+  }
+}
+
+.save-error-box {
+  background-color: $light-error-bg;
+  color: $light-error-text;
+  border: 1px solid #f5c6cb;
+  padding: 30px;
+  border-radius: 8px;
+  text-align: center;
+  margin: 0 auto;
+  max-width: 600px;
+
+  p {
+    text-align: center !important;
+    margin-bottom: 10px;
+  }
+}
+
+.manual-download-btn {
+  padding: 12px 24px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 15px;
+  font-weight: bold;
+  font-size: 16px;
+  transition: background-color 0.2s, transform 0.1s;
+  &:hover {
+    background-color: #0056b3;
+  }
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+.number-display {
+  font-size: 5rem;
+  line-height: 5rem;
+  font-weight: 800;
+  margin: 20px 0;
+}
+
+body.dark-mode {
+  background-color: $dark-bg !important;
+  color: $text-light !important;
+
+  #dark-mode-navbar {
+    background-color: rgba(26, 26, 26, 0.9) !important;
+  }
+
+  .jspsych-btn,
+  .sd-btn,
+  .sv-btn,
+  input[type="button"] {
+    background-color: $dark-surface !important;
+    color: #ffffff !important;
+    border: 1px solid #555 !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+
+    &:hover {
+      background-color: #444 !important;
+      border-color: #888 !important;
+    }
+  }
+
+  input[type="text"],
+  textarea,
+  select {
+    background-color: $dark-surface !important;
+    color: #fff !important;
+    border: 1px solid #555 !important;
+  }
+
+  .sentence-container,
+  .instruction-container,
+  .welcome-container,
+  .save-status-wrapper {
+    background-color: #2d2d2d;
+    border: 1px solid #444;
+    .study-sentence,
+    .test-prompt,
+    p {
+      color: #fff;
+    }
+  }
+
+  .save-error-box {
+    background-color: $dark-error-bg;
+    color: $dark-error-text;
+    border: 1px solid #603030;
+  }
+}
+
+.sd-question__required-text,
+.jspsych-survey-multi-choice-question .required {
+  display: none !important;
+}
+
+.spinner {
+  margin: 20px auto;
+  width: 40px;
+  height: 40px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+/* SurveyJS: inherit the experiment's light/dark theme */
+
+.sd-root-modern,
+.sd-root-modern *,
+.sd-container-modern,
+.sd-body,
+.sd-page,
+.sd-row,
+.sd-panel,
+.sd-question,
+.sd-element,
+.sd-html,
+.sd-action-bar {
+  box-sizing: border-box;
+}
+
+.sd-root-modern,
+.sd-container-modern,
+.sd-body,
+.sd-page {
+  background: transparent !important;
+}
+
+.sd-row,
+.sd-panel,
+.sd-question,
+.sd-element {
+  background: transparent !important;
+  box-shadow: none !important;
+  border-color: transparent !important;
+}
+
+/* Light mode */
+body:not(.dark-mode) .sd-root-modern,
+body:not(.dark-mode) .sd-root-modern *,
+body:not(.dark-mode) .sd-container-modern,
+body:not(.dark-mode) .sd-body,
+body:not(.dark-mode) .sd-page,
+body:not(.dark-mode) .sd-question,
+body:not(.dark-mode) .sd-html {
+  color: #222 !important;
+}
+
+/* Dark mode */
+body.dark-mode .sd-root-modern,
+body.dark-mode .sd-root-modern *,
+body.dark-mode .sd-container-modern,
+body.dark-mode .sd-body,
+body.dark-mode .sd-page,
+body.dark-mode .sd-question,
+body.dark-mode .sd-html {
+  color: #f2f2f2 !important;
+}
+
+/* Remove SurveyJS white cards */
+body.dark-mode .sd-row,
+body.dark-mode .sd-panel,
+body.dark-mode .sd-question,
+body.dark-mode .sd-element {
+  background: transparent !important;
+  border-color: transparent !important;
+}
+
+/* Keep form controls readable in dark mode */
+body.dark-mode .sd-input,
+body.dark-mode .sd-dropdown,
+body.dark-mode .sd-text,
+body.dark-mode select,
+body.dark-mode input[type="text"],
+body.dark-mode input[type="date"] {
+  background: #242424 !important;
+  color: #f2f2f2 !important;
+  border-color: #666 !important;
+}
+
+/* Continue button */
+body.dark-mode .sd-btn {
+  background: #2b2b2b !important;
+  color: #ffffff !important;
+  border: 1px solid #666 !important;
+}
+
+body:not(.dark-mode) .sd-btn {
+  background: #f4f4f4 !important;
+  color: #222222 !important;
+  border: 1px solid #aaa !important;
+}
+
+/* Radio buttons and slider remain visible in both themes */
+body.dark-mode input[type="radio"],
+body.dark-mode input[type="checkbox"],
+body.dark-mode input[type="range"] {
+  accent-color: #dddddd;
+}
+
+body:not(.dark-mode) input[type="radio"],
+body:not(.dark-mode) input[type="checkbox"],
+body:not(.dark-mode) input[type="range"] {
+  accent-color: #333333;
+} 
