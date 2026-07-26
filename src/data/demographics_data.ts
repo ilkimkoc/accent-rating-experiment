@@ -32,10 +32,10 @@ export const DEMOGRAPHICS_DATA = {
       birth_country: "Hangi ülkede doğdunuz?",
       birth_city: "Hangi şehirde doğdunuz?",
       lived_abroad_long: "Yurt dışında 6 aydan daha uzun süre yaşadınız mı?",
-      lived_abroad_country: "Hangi ülke veya ülkelerde yaşadınız?",
+      lived_abroad_country: "Hangi ülke veya ülkelerde yaşadınız? Lütfen bu ülkelerde hangi yıllar arasında yaşadığınızı da belirtiniz.",
       current_country: "Şu anda hangi ülkede yaşıyorsunuz?",
       regional_variety_familiarity: "Türkiye'deki bölgesel aksan veya lehçelere aşina mısınız?",
-      regional_varieties_text: "Hangi bölgesel aksan veya lehçelere aşinasınız?",
+      regional_varieties_text: "Hangi bölgesel aksan veya lehçelere aşinasınız?", 
       education: {
         title: "En yüksek tamamladığınız eğitim seviyesi nedir?",
         options: [
@@ -127,7 +127,7 @@ export const DEMOGRAPHICS_DATA = {
       birth_country: "In welchem Land wurden Sie geboren?",
       birth_city: "In welcher Stadt wurden Sie geboren?",
       lived_abroad_long: "Haben Sie länger als sechs Monate im Ausland gelebt?",
-      lived_abroad_country: "In welchem Land oder in welchen Ländern haben Sie gelebt?",
+      lived_abroad_country: "In welchem Land oder in welchen Ländern haben Sie gelebt? Bitte geben Sie auch an, in welchen Jahren Sie dort gelebt haben.",
       current_country: "In welchem Land leben Sie derzeit?", 
       regional_variety_familiarity: "Sind Sie mit regionalen Akzenten oder Dialekten aus Deutschland vertraut?",
       regional_varieties_text: "Mit welchen regionalen Akzenten oder Dialekten sind Sie vertraut?",

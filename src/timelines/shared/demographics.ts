@@ -229,11 +229,12 @@ const countryChoices = COUNTRY_CODES
             isRequired: true,
           },
           {
-            type: "text",
+            type: "dropdown",
             name: "current_country",
             title: content.questions.current_country,
+            choices: countryChoices,
             isRequired: true,
-          },
+          }, 
           {
             type: "radiogroup",
             name: "regional_variety_familiarity",
@@ -403,25 +404,29 @@ const countryChoices = COUNTRY_CODES
 
   const responses = data.response;
 
-  const requiredBirthCountry =
+  const requiredCountry =
     lang === Language.TR ? "TR" : "DE";
 
   const failsBasicEligibility =
-    responses.birth_country !== requiredBirthCountry ||
+    responses.birth_country !== requiredCountry ||
+    responses.current_country !== requiredCountry || 
     responses.mother_tongue !== "yes" ||
-    responses.other_native_languages !== "no" ||
-    responses.lived_abroad_long !== "no";
-
-  const hasHighAdditionalLanguageProficiency =
-    responses.additional_languages === "yes" &&
-    Array.isArray(responses.list_languages) &&
-    responses.list_languages.some(
-      (language: any) => Number(language.proficiency) > 5
-    );
+    responses.other_native_languages !== "no" 
+//  responses.lived_abroad_long !== "no";
+// Temporarily disabled:
+// Participants are not excluded based on high proficiency
+// in an additional language.
+//
+// const hasHighAdditionalLanguageProficiency =
+//  responses.additional_languages === "yes" &&
+//  Array.isArray(responses.list_languages) &&
+//  responses.list_languages.some(
+//  (language: any) => Number(language.proficiency) > 5
+//  );
 
   responses.is_eligible =
     !failsBasicEligibility &&
-    !hasHighAdditionalLanguageProficiency;
+//  !hasHighAdditionalLanguageProficiency;
 
   updateSession(startIdx, responses);
 },

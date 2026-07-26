@@ -19,14 +19,18 @@ export function createAccentRatingTimeline(
         elements: [
           {
             type: "html",
-            name: "audio_player",
+            name: "audio_player", 
             html: `
               <div style="
                 display: flex;
                 justify-content: center;
                 margin: 10px 0 35px 0;
               ">
-                <audio controls controlsList="nodownload">
+                <audio 
+                id="${stimulus.id}"
+                controls
+                controlsList="nodownload"
+                >
                   <source src="${stimulus.audio}" type="audio/wav">
                   Ihr Browser unterstützt die Audiowiedergabe nicht.
                 </audio>
@@ -60,12 +64,13 @@ export function createAccentRatingTimeline(
           {
             type: "html",
             name: "accent_slider_heading",
+            visibleIf: "{accent_types} contains 'foreign'",
             html: `
             <div style="margin-top: 30px;">
             <p style="
             font-size: 1.15rem;
             font-weight: 600;
-            margin-bottom: 14px;
+            margin-bottom: 14px; 
             ">
             Bewerten Sie den Akzent der sprechenden Person.
             </p>
@@ -86,6 +91,7 @@ export function createAccentRatingTimeline(
             name: "accent_rating",
             title: "Akzentbewertung",
             titleLocation: "hidden",
+            visibleIf: "{accent_types} contains 'foreign'",
             min: 1,
             max: 6,
             step: 1,
@@ -230,6 +236,21 @@ export function createAccentRatingTimeline(
 
           slider.addEventListener("input", () => {
             accentRating = Number(slider.value);
+          });
+        }
+        const audio = document.getElementById(
+          stimulus.id
+        ) as HTMLAudioElement | null;
+
+        if (audio) {
+          let completedPlayCount = 0;
+          
+          audio.addEventListener("ended", () => {
+            completedPlayCount += 1;
+
+            if (completedPlayCount >= 2) {
+              audio.controls = false;
+            }
           });
         }
       },
