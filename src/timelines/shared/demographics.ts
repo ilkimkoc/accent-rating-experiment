@@ -245,9 +245,13 @@ const countryChoices = COUNTRY_CODES
                 text: content.answers.yes,
               },
               {
+                value: "some",
+                text: content.answers.some,
+              },
+              {
                 value: "no",
                 text: content.answers.no,
-              },
+              }, 
             ],
             isRequired: true,
           },

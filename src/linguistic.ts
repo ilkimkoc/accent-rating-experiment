@@ -34,6 +34,7 @@ import {
   Phase,
 } from "./types/enums";
 import { createInvalidPathTimeline } from "./timelines/shared/error_screens";
+import { createForeignFollowupTimeline } from "./timelines/linguistic/foreign_followup";
 
 import {
   GLOBAL_CONFIG,
@@ -274,6 +275,14 @@ currentIdx++;
 );
 currentIdx += session.accentStimuli.length;
 
+const foreignFollowupTimeline = createForeignFollowupTimeline(
+  jsPsych,
+  updateSession,
+  currentIdx
+);
+
+currentIdx += 3;
+
   const save = createSaveTimeline(
     subject_id,
     jsPsych,
@@ -289,6 +298,7 @@ return [
   welcome,
   studyIntro,
   ...ratingTrials,
+   ...foreignFollowupTimeline, 
   save,
   completion,
 ];

@@ -7,25 +7,33 @@ export function createAccentRatingTimeline(
   startIdx: number
 ) {
   return stimuli.map((stimulus, index) => {
-    let accentRating = 1;
 
     return {
       type: jsPsychSurvey,
 
       survey_json: {
         showQuestionNumbers: "off",
-        completeText: "Weiter",
+        completeText: "Weiter", 
 
         elements: [
           {
             type: "html",
-            name: "audio_player", 
+            name: "audio_player",
             html: `
               <div style="
                 display: flex;
-                justify-content: center;
+                flex-direction: column;
+                align-items: center;
                 margin: 10px 0 35px 0;
-              ">
+                ">
+                
+              <p style="
+                font-weight: 600;
+                margin-bottom: 12px;
+                ">
+                Aufnahme ${index + 1} von ${stimuli.length}
+                </p>
+
                 <audio 
                 id="${stimulus.id}"
                 controls
@@ -62,6 +70,16 @@ export function createAccentRatingTimeline(
           },
 
           {
+            type: "text",
+            name: "regional_accent_text",
+            title: "Welchen regionalen Akzent hat die sprechende Person Ihrer Meinung nach?",
+            visibleIf: "{accent_types} contains 'regional'",
+            isRequired: true,
+            requiredErrorText:
+            "Bitte geben Sie an, welchen regionalen Akzent oder Dialekt Sie hören.",
+          }, 
+
+          {
             type: "html",
             name: "accent_slider_heading",
             visibleIf: "{accent_types} contains 'foreign'",
@@ -70,7 +88,7 @@ export function createAccentRatingTimeline(
             <p style="
             font-size: 1.15rem;
             font-weight: 600;
-            margin-bottom: 14px; 
+            margin-bottom: 14px;
             ">
             Bewerten Sie den Akzent der sprechenden Person.
             </p>
@@ -102,49 +120,50 @@ export function createAccentRatingTimeline(
             "Bitte bewegen Sie den Schieberegler und wählen Sie eine Bewertung aus.",
         },
         {
-  type: "html",
-  name: "speaker_description_scale",
-  html: `
-    <div style="
-      width: 100%;
-      max-width: 900px;
-      margin: 30px auto 10px auto;
-      box-sizing: border-box;
-    ">
-      <p style="
-        font-size: 1.15rem;
-        font-weight: 600;
-        margin-bottom: 28px;
-      ">
-        Wie würden Sie die sprechende Person anhand des Gehörten beschreiben?
-      </p>
+          type: "html",
+          name: "speaker_description_scale",
+          html: `
+           <div style="
+           width: 100%;
+           max-width: 900px;
+           margin: 30px auto 10px auto;
+           box-sizing: border-box;
+          ">
+          
+           <p style="
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 28px;
+           ">
+            Wie würden Sie die sprechende Person anhand des Gehörten beschreiben?
+           </p>
+            
+           <div style="
+            display: grid;
+            grid-template-columns:
+             minmax(125px, 1fr)
+             repeat(6, minmax(34px, 48px))
+             minmax(125px, 1fr);
+            column-gap: 8px;
+            row-gap: 22px;
+            align-items: center;
+            width: 100%;
+            box-sizing: border-box;
+          ">
+            <div></div>
+            <div style="text-align:center;">1</div>
+            <div style="text-align:center;">2</div>
+            <div style="text-align:center;">3</div>
+            <div style="text-align:center;">4</div>
+            <div style="text-align:center;">5</div>
+            <div style="text-align:center;">6</div>
+            <div></div>
 
-      <div style="
-        display: grid;
-        grid-template-columns:
-          minmax(125px, 1fr)
-          repeat(6, minmax(34px, 48px))
-          minmax(125px, 1fr);
-        column-gap: 8px;
-        row-gap: 22px;
-        align-items: center;
-        width: 100%;
-        box-sizing: border-box;
-      ">
-        <div></div>
-        <div style="text-align:center;">1</div>
-        <div style="text-align:center;">2</div>
-        <div style="text-align:center;">3</div>
-        <div style="text-align:center;">4</div>
-        <div style="text-align:center;">5</div>
-        <div style="text-align:center;">6</div>
-        <div></div>
-
-        <div style="text-align:right;">Vertrauenswürdig</div>
-        ${[1, 2, 3, 4, 5, 6]
-          .map(
-            (value) => `
-              <label style="display:flex; justify-content:center;">
+            <div style="text-align:right;">Vertrauenswürdig</div>
+            ${[1, 2, 3, 4, 5, 6]
+             .map(
+              (value) => `
+               <label style="display:flex; justify-content:center;">
                 <input
                   type="radio"
                   name="speaker-trustworthiness"
@@ -157,7 +176,7 @@ export function createAccentRatingTimeline(
           .join("")}
         <div>Nicht vertrauenswürdig</div>
 
-        <div style="text-align:right;">Hoch gebildet</div> 
+        <div style="text-align:right;">Hoch gebildet</div>
         ${[1, 2, 3, 4, 5, 6]
           .map(
             (value) => `
@@ -222,22 +241,57 @@ export function createAccentRatingTimeline(
       </div>
     </div>
   `,
-}, 
-        ],
-      }, 
+},
+],
+},
+
+survey_function: (survey: any) => {
+  survey.onCompleting.add((sender: any, options: any) => {
+    const trustworthiness = document.querySelector(
+      'input[name="speaker-trustworthiness"]:checked'
+    ) as HTMLInputElement | null;
+
+    const education = document.querySelector(
+      'input[name="speaker-education"]:checked'
+    ) as HTMLInputElement | null;
+
+    const urbanity = document.querySelector(
+      'input[name="speaker-urbanity"]:checked'
+    ) as HTMLInputElement | null;
+
+    const wealth = document.querySelector(
+      'input[name="speaker-wealth"]:checked'
+    ) as HTMLInputElement | null;
+
+    const errorMessage = document.getElementById(
+      "speaker-description-error"
+    );
+
+    if (!trustworthiness || !education || !urbanity || !wealth) {
+      options.allow = false;
+
+      if (errorMessage) {
+        errorMessage.style.display = "block";
+      }
+
+      return;
+    }
+
+    if (errorMessage) {
+      errorMessage.style.display = "none";
+    }
+
+    sender.setValue("speaker_description_ratings", {
+      trustworthiness: Number(trustworthiness.value),
+      education: Number(education.value),
+      urbanity: Number(urbanity.value),
+      wealth: Number(wealth.value),
+    });
+  });
+},
 
       on_load: () => {
-        const slider = document.getElementById(
-          "accent-rating-slider"
-        ) as HTMLInputElement | null;
 
-        if (slider) {
-          accentRating = Number(slider.value);
-
-          slider.addEventListener("input", () => {
-            accentRating = Number(slider.value);
-          });
-        }
         const audio = document.getElementById(
           stimulus.id
         ) as HTMLAudioElement | null;
@@ -256,15 +310,14 @@ export function createAccentRatingTimeline(
       },
 
       on_finish: (data: any) => {
-        data.response = {
-          ...data.response,
-          accent_rating: accentRating,
-        };
 
         data.stimulus_id = stimulus.id;
         data.audio_file = stimulus.audio;
         data.speaker_group = stimulus.speakerGroup;
         data.block = stimulus.block;
+
+         console.log("Accent trial response:", data.response);
+         console.log("Reaction time:", data.rt);
 
         updateSession(startIdx + index, data);
       },
