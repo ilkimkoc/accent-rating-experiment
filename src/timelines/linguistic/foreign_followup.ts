@@ -166,15 +166,7 @@ export function createForeignFollowupTimeline(
                 margin: 10px auto 30px auto;
                 line-height: 1.6;
               ">
-                ${introduction}
-
-                <p>
-                  ${
-                    isTurkish()
-                      ? "Lütfen kaydı yeniden dinleyiniz."
-                      : "Bitte hören Sie sich die Aufnahme noch einmal an."
-                  }
-                </p>
+                ${introduction} 
 
                 <div style="
                   display: flex;
